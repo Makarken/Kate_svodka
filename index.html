@@ -85,7 +85,7 @@ tfoot td:nth-child(n+3){text-align:right}
 <div id="root"></div>
 <button class="print-bar" id="printBtn" onclick="window.print()" style="display:none">📄 Сохранить PDF</button>
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwdnKq1hs1LwWbvQTmSR1B4EgKw7jFPHhPZ5lZAJkbqtXEHIEVYDxXQTliHJRzh-1I/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyEpyTJjX2YNRci86E0zuRO71ZOofZjd5ZfQ_OI743bSvZiOcXllyKeVMj0AgBt6-5I/exec';
 const MN=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 function getParams(){const p=new URLSearchParams(window.location.search),now=new Date();let m=parseInt(p.get('month'))||now.getMonth()+1,y=parseInt(p.get('year'))||now.getFullYear();return{month:Math.max(1,Math.min(12,m)),year:y}}
 function fmt(n){return Number(n).toFixed(2).replace('.',',')}
