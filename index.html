@@ -87,7 +87,7 @@ tfoot td:nth-child(n+3){text-align:right}
 <script>
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwdnKq1hs1LwWbvQTmSR1B4EgKw7jFPHhPZ5lZAJkbqtXEHIEVYDxXQTliHJRzh-1I/exec';
 const MN=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-function getParams(){const p=new URLSearchParams(window.location.search),now=new Date();let m=parseInt(p.get('month'))||0,y=parseInt(p.get('year'))||now.getFullYear();if(!m){m=now.getMonth();if(m===0){m=12;y--;}};return{month:Math.max(1,Math.min(12,m||4)),year:y}}
+function getParams(){const p=new URLSearchParams(window.location.search),now=new Date();let m=parseInt(p.get('month'))||now.getMonth()+1,y=parseInt(p.get('year'))||now.getFullYear();return{month:Math.max(1,Math.min(12,m)),year:y}}
 function fmt(n){return Number(n).toFixed(2).replace('.',',')}
 function fmtI(n){return Math.round(n).toLocaleString('ru-RU')}
 function chart(dd){if(!dd||!dd.length)return'<div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:12px">Нет данных</div>';const mx=Math.max(...dd.map(d=>Math.abs(d.profit)),1);return'<div class="chart-area">'+dd.map(d=>'<div class="bar-col"><div class="bar '+(d.profit>=0?'p':'l')+'" style="height:'+Math.abs(d.profit)/mx*100+'%"></div><div class="bar-lbl">'+d.day+'</div></div>').join('')+'</div>'}
@@ -159,7 +159,7 @@ async function load(m,y){
     const res=await fetch(SCRIPT_URL+'?action=report&month='+m+'&year='+y);
     const data=await res.json();
     if(data.error)throw new Error(data.error);
-    if(!data.sales||!data.sales.length){document.getElementById('root').innerHTML='<div class="state"><div class="state-title">Нет данных</div><div class="state-sub">За '+MN[m-1]+' '+y+' продаж со статусом «Деньги зашли» не найдено</div></div>';return;}
+    if(!data.sales||!data.sales.length){document.getElementById('root').innerHTML='<div class="page"><div class="month-nav"><button class="nav-btn" onclick="navigate(-1)">← Пред.</button><span class="nav-month">'+MN[m-1]+' '+y+'</span><button class="nav-btn" onclick="navigate(1)">След. →</button></div><div class="state" style="min-height:40vh"><div class="state-title">Нет данных</div><div class="state-sub">За '+MN[m-1]+' '+y+' продаж со статусом «Деньги зашли» не найдено</div></div></div>';return;}
     render(data,m,y);
   }catch(e){document.getElementById('root').innerHTML='<div class="state"><div class="state-title">Ошибка</div><div class="state-sub">'+e.message+'</div></div>';}
 }
