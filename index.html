@@ -60,9 +60,13 @@ tfoot td:nth-child(n+3){text-align:right}
 .pb-val{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold2);line-height:1}
 .pb-sub{font-size:11px;color:#555;margin-top:4px}
 .pb-div{width:1px;height:60px;background:#333;flex-shrink:0}
-.pb-partners{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.pb-left{display:flex;flex-direction:column;justify-content:center}
+.pb-right{display:flex;flex-direction:column;justify-content:center}
+.pb-partners{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.pb-partner{display:flex;justify-content:space-between;width:160px;border-bottom:1px solid #2a2a2a;padding-bottom:5px}
+.pb-partner:last-child{border-bottom:none}
 .pb-partner{font-size:11px;color:#666;display:flex;gap:16px}
-.pb-partner span:last-child{color:var(--gold2);font-weight:500;min-width:70px;text-align:right}
+.pb-partner span:last-child{color:var(--gold2);font-weight:500;text-align:right}
 .rfoot{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
 .rf-l{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--ink4);font-style:italic}
 .rf-r{font-size:10px;color:var(--ink4)}
@@ -77,10 +81,13 @@ tfoot td:nth-child(n+3){text-align:right}
 .state-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink2)}
 .state-sub{font-size:12px;color:var(--ink3);text-align:center}
 @media(max-width:480px){.kpi-row{grid-template-columns:repeat(2,1fr)}.rh-title{font-size:36px}.rh-orn{font-size:80px}.pb-val{font-size:32px}.payout{flex-direction:column;gap:16px}.pb-div{width:60px;height:1px}.pb-partners{align-items:flex-start}}
-@page{size:A4 portrait;margin:6mm}
+@page{size:A4 portrait;margin:6mm;margin-bottom:4mm}
 @media print{
   .print-bar,.month-nav{display:none!important}
   body{background:white;font-size:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{height:auto}
+  a[href]:after{content:none!important}
+  .page::after{content:none!important}
   .page{padding:2px 6px 4px;max-width:100%}
   .rh{padding-bottom:6px;margin-bottom:10px;border-bottom-width:1px}
   .rh-title{font-size:22px;line-height:1}
@@ -143,10 +150,8 @@ function render(data,month,year){
       <select class="month-select" onchange="selectMonth(this.value)" id="monthSel">${MN.map((n,i)=>'<option value="'+(i+1)+'"'+(i+1===month&&year===CY?' selected':'')+'>'+n+' ${year}'+'</option>').join('')}</select>
     </div>
     <div class="rh fu">
-      <div class="rh-eye">Финансовая сводка · База с Катей</div>
-      <div class="rh-title">Сводка за<br><em>${MN[month-1]}</em></div>
-      <div class="rh-orn">${String(year).slice(2)}</div>
-      <div class="rh-meta"><span><strong>${MN[month-1]}</strong> ${year}</span><span>Позиций: <strong>${sales.length}</strong></span><span>Только «Деньги зашли»</span><span>Дата: <strong>${new Date().toLocaleDateString('ru-RU')}</strong></span></div>
+      <div class="rh-title" style="text-align:center">Сводка за<br><em>${MN[month-1]}</em></div>
+      <div class="rh-meta" style="justify-content:center;margin-top:10px"><span><strong>${MN[month-1]}</strong> ${year}</span><span>Позиций: <strong>${sales.length}</strong></span><span>Только «Деньги зашли»</span><span>Дата: <strong>${new Date().toLocaleDateString('ru-RU')}</strong></span></div>
     </div>
     <div class="kpi-row fu">
       <div class="kpi"><div class="kpi-label">Продано</div><div class="kpi-value">${sales.length}</div><div class="kpi-sub">позиций</div></div>
@@ -169,13 +174,20 @@ function render(data,month,year){
     <div class="sec fu">
       <div class="sec-head"><div class="sec-title">Вывод прибыли</div><div class="sec-line"></div><div class="sec-num">03</div></div>
       <div class="payout">
-        <div><div class="pb-label">Каждому партнёру</div><div class="pb-val">${fmt(payout)}€</div><div class="pb-sub">из ${fmt(totalProfit)}€ общей прибыли</div></div>
+        <div class="pb-left">
+          <div class="pb-label">Каждому партнёру</div>
+          <div class="pb-val">${fmt(payout)}€</div>
+          <div class="pb-sub">из ${fmt(totalProfit)}€ общей прибыли</div>
+        </div>
         <div class="pb-div"></div>
-        <div><div class="pb-label">Партнёры</div><div class="pb-partners">
-          <div class="pb-partner"><span>Катя</span><span>${fmt(payout)}€</span></div>
-          <div class="pb-partner"><span>Макар</span><span>${fmt(payout)}€</span></div>
-          <div class="pb-partner"><span>Влад</span><span>${fmt(payout)}€</span></div>
-        </div></div>
+        <div class="pb-right">
+          <div class="pb-label">Партнёры</div>
+          <div class="pb-partners">
+            <div class="pb-partner"><span>Катя</span><span>${fmt(payout)}€</span></div>
+            <div class="pb-partner"><span>Макар</span><span>${fmt(payout)}€</span></div>
+            <div class="pb-partner"><span>Влад</span><span>${fmt(payout)}€</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="rfoot fu">
