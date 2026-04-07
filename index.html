@@ -147,7 +147,7 @@ function render(data,month,year){
       <button class="nav-btn" onclick="navigate(-1)">←</button>
       <span class="nav-month">${MN[month-1]} ${year}</span>
       <button class="nav-btn" onclick="navigate(1)">→</button>
-      <select class="month-select" onchange="selectMonth(this.value)" id="monthSel">${MN.map((n,i)=>'<option value="'+(i+1)+'"'+(i+1===month&&year===CY?' selected':'')+'>'+n+' ${year}'+'</option>').join('')}</select>
+      <select class="month-select" onchange="selectMonth(this.value)" id="monthSel">${MN.map((n,i)=>'<option value="'+(i+1)+'"'+(i+1===month?' selected':'')+'>'+n+' '+year+'</option>').join('')}</select>
     </div>
     <div class="rh fu">
       <div class="rh-title" style="text-align:center">Сводка за<br><em>${MN[month-1]}</em></div>
