@@ -133,7 +133,7 @@ tfoot td:nth-child(n+3){text-align:right}
 <div id="root"></div>
 <button class="print-bar" id="printBtn" onclick="window.print()" style="display:none">📄 Сохранить PDF</button>
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyEpyTJjX2YNRci86E0zuRO71ZOofZjd5ZfQ_OI743bSvZiOcXllyKeVMj0AgBt6-5I/exec';
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbyXkB-WPYQkzzXCbQyJGEvo4uZbA1LHpqHhxyOBGylx0P6AM0NMHAOmYlC8F54zFuDc/exec';
 const MN=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 function getParams(){const p=new URLSearchParams(window.location.search),now=new Date();let m=parseInt(p.get('month'))||now.getMonth()+1,y=parseInt(p.get('year'))||now.getFullYear();return{month:Math.max(1,Math.min(12,m)),year:y}}
 function fmt(n){return Number(n).toFixed(2).replace('.',',')}
@@ -151,7 +151,7 @@ function render(data,month,year){
     </div>
     <div class="rh fu">
       <div class="rh-title" style="text-align:center">Сводка за<br><em>${MN[month-1]}</em></div>
-      <div class="rh-meta" style="justify-content:center;margin-top:10px"><span><strong>${MN[month-1]}</strong> ${year}</span><span>Позиций: <strong>${sales.length}</strong></span><span>Только «Деньги зашли»</span><span>Дата: <strong>${new Date().toLocaleDateString('ru-RU')}</strong></span></div>
+      <div class="rh-meta" style="justify-content:center;margin-top:10px"><span><strong>${MN[month-1]}</strong> ${year}</span><span>Позиций: <strong>${sales.length}</strong></span><span>Все продажи месяца</span><span>Дата: <strong>${new Date().toLocaleDateString('ru-RU')}</strong></span></div>
     </div>
     <div class="kpi-row fu">
       <div class="kpi"><div class="kpi-label">Продано</div><div class="kpi-value">${sales.length}</div><div class="kpi-sub">позиций</div></div>
